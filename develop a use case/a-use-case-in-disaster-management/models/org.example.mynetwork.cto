@@ -76,3 +76,9 @@ enum Resource_status{
   o in_transist
   o delivered
 }
+
+transaction Request {
+  --> Victim victim
+  --> Resource ResourceType
+  o String quantity
+}
