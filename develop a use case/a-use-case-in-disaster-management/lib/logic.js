@@ -22,6 +22,25 @@
  * @param {org.example.mynetwork.Request} Request
  * @transaction
  */
+
+function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
+    var R = 6371; // Radius of the earth in km
+    var dLat = deg2rad(lat2-lat1);  // deg2rad below
+    var dLon = deg2rad(lon2-lon1); 
+    var a = 
+      Math.sin(dLat/2) * Math.sin(dLat/2) +
+      Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * 
+      Math.sin(dLon/2) * Math.sin(dLon/2)
+      ; 
+    var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a)); 
+    var d = R * c; // Distance in km
+    return d;
+  }
+  
+  function deg2rad(deg) {
+    return deg * (Math.PI/180)
+  }
+
 async function Request(tn) {           
     //process the request from the victim
 
@@ -49,5 +68,26 @@ async function Request(tn) {
         break;
     }
 
+    //Select one volunteer who has relatively least distance
+    //can upgrade by calculating distance using google map api
+    let min = Number.MAX_VALUE;
+    let distance;
+    let minVol = volunteers[0];
+    for(i=0;i<volunteers.length;i++)
+    {
+        let v = volunteers[i];
+        let loc = tn.victim.loc;
+        distance = getDistanceFromLatLonInKm(loc.latitude,loc.longitue,v.latitude,v.longitude);
+        if(distance < min)
+        {
+            min = distance;
+            minVol = v;
+        }
+    }
     
+    //here what we will do is , the volunteer can run a transaction which will notify the victim 
+    //that the volunteer has accepted the request.
+    //We will not be using notification for the time being , but will implement in  fabric
+    //Here, we will just update the volunteer's attribute saying if he has received a request for
+    //a particular resource or not.
 }
