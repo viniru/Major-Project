@@ -39,6 +39,10 @@ participant Volunteer extends Member {
   --> Resource[] offered_resources optional
 }
 
+participant Logistics extends Member {
+  o Loaction loc
+}
+
 abstract asset Resource identified by resourceid{
   o String resourceid
   o ResourceType type
