@@ -19,25 +19,35 @@
 
 /**
  * Sample transaction
- * @param {org.example.mynetwork.SampleTransaction} sampleTransaction
+ * @param {org.example.mynetwork.Request} Request
  * @transaction
  */
-async function sampleTransaction(tx) {
-    // Save the old value of the asset.
-    const oldValue = tx.asset.value;
+async function Request(tn) {           
+    //process the request from the victim
 
-    // Update the asset with the new value.
-    tx.asset.value = tx.newValue;
+    //A list that contains the ids of every resource present in the blockchain network
+    const resourceRegistry = await getAssetRegistry("org.example.mynetwork.Resources"); 
+    
+    let resources = []
 
-    // Get the asset registry for the asset.
-    const assetRegistry = await getAssetRegistry('org.example.mynetwork.SampleAsset');
-    // Update the asset in the asset registry.
-    await assetRegistry.update(tx.asset);
+    //list of volunteers that are offering the requested type of resource
+    let volunteers = []  
+    let i;
 
-    // Emit an event for the modified asset.
-    let event = getFactory().newEvent('org.example.mynetwork', 'SampleEvent');
-    event.asset = tx.asset;
-    event.oldValue = oldValue;
-    event.newValue = tx.newValue;
-    emit(event);
+    //filer unneeded resource from the registry
+    for(i=0;i<resourceRegistry.length;i++)          
+        if(resourceRegistry[i].equals(tn.resourceType) == true)
+        {
+            resources.push(resourceRegistry[i]);
+            //resource has a relation to its owner in its definition
+            volunteers.push(resourceRegistry[i].volunteer_origin);   
+        }
+
+    if(volunteers.length == 0)
+    {
+        console.log("There are no volunteers")
+        break;
+    }
+
+    
 }
