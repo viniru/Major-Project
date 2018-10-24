@@ -73,6 +73,7 @@ asset Medic_Kits extends Resource {
 
 enum Resource_status{
   o available
+  o requested
   o in_transist
   o delivered
 }
@@ -82,3 +83,4 @@ transaction Request {
   --> Resource ResourceType
   o String quantity
 }
+

@@ -57,6 +57,8 @@ async function Request(tn) {
     for(i=0;i<resourceRegistry.length;i++)          
         if(resourceRegistry[i].equals(tn.resourceType) == true)
         {
+            if(resourceRegistry[i].status != available)
+                continue;
             resources.push(resourceRegistry[i]);
             //resource has a relation to its owner in its definition
             volunteers.push(resourceRegistry[i].volunteer_origin);   
@@ -91,3 +93,5 @@ async function Request(tn) {
     //Here, we will just update the volunteer's attribute saying if he has received a request for
     //a particular resource or not.
 }
+
+
