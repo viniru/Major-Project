@@ -17,11 +17,6 @@
  * Write your transction processor functions here
  */
 
-/**
- * Sample transaction
- * @param {org.example.mynetwork.Request} Request
- * @transaction
- */
 
 function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     var R = 6371; // Radius of the earth in km
@@ -41,6 +36,11 @@ function getDistanceFromLatLonInKm(lat1,lon1,lat2,lon2) {
     return deg * (Math.PI/180)
   }
 
+/**
+ * Sample transaction
+ * @param {org.example.mynetwork.Request} Request
+ * @transaction
+ */
 async function Request(tn) {           
     //process the request from the victim
 
