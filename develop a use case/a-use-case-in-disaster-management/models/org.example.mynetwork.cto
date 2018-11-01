@@ -26,7 +26,8 @@ participant Volunteer extends Member {
   --> Resource[] offered_resources optional
 }
 
- asset Resource identified by resourceid{
+
+ asset Resource identified by resourceid {
   o String resourceid
   o ResourceType type
   o Resource_status status
